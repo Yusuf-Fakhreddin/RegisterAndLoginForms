@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RegisterAndLoginForms.Models;
+using RegisterAndLoginForms.Services;
 
 namespace RegisterAndLoginForms.Controllers
 {
@@ -12,8 +13,9 @@ namespace RegisterAndLoginForms.Controllers
         // expecting a UserModel Obj 
         public IActionResult ProcessLogin(UserModel userModel)
         {
+            SecurityService securityService = new SecurityService();
             // sending the UserModel obj to the success page
-            if (userModel.UserName == "Hello World" && userModel.Password == "123456")
+            if (securityService.IsValid(userModel))
                 return View("LoginSuccess", userModel);
             else
                 return View("LoginFailure", userModel);
